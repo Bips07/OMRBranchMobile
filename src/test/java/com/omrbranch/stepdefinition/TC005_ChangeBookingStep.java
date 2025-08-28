@@ -25,7 +25,9 @@ PageObjectManager pom = new PageObjectManager();
 	public void user_is_on_the_omr_branch_hotel_web_application() throws FileNotFoundException, IOException {
 		
 		appLaunch(getPropertyFileValue("launchWeb"), getPropertyFileValue("browserName"), getPropertyFileValue("deviceName"), getPropertyFileValue("platformName"), getPropertyFileValue("platformVersion"), getPropertyFileValue("appPackage"), getPropertyFileValue("appActivity"), getPropertyFileValue("automationName"));
+		enterApplnUrl(getPropertyFileValue("url"));
 		implicitWait();
+		pom.getLoginPage().clickAllow();
 		
 	}
 	@When("User enter {string} and {string} in chrome page")

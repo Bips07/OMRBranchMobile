@@ -1,21 +1,32 @@
 package com.omrbranch.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
 import com.omrbranch.baseclass.BaseClass;
 
 public class ExploreHotelPage extends BaseClass {
-	
-	
-    By textWelcome = By.xpath("//android.widget.TextView[@resource-id='header_welcome']");
+
+	public ExploreHotelPage(){
+		PageFactory.initElements(driver,this);
+	}
+	By textWelcome = By.xpath("//android.widget.TextView[@resource-id='header_welcome']");
 	By textExploreHotels = By.xpath("//android.widget.TextView[@resource-id='search_explore_hotel']");
-	By lstState = By.xpath("//android.widget.ScrollView[@content-desc='search_select_state flatlist']//android.widget.TextView");
-	By lstCity = By.xpath("//android.widget.ScrollView[@content-desc='search_select_city flatlist']//android.widget.TextView");
-	By lstRoomType = By.xpath("//android.widget.ScrollView[@content-desc='search_room_type flatlist']//android.widget.TextView");
-	By lstNoOfRoom = By.xpath("//android.widget.ScrollView[@content-desc='search_select_no_of_rooms flatlist']//android.widget.TextView");
-	By lstNoOfAdults = By.xpath("//android.widget.ScrollView[@content-desc='search_select_no_of_adults flatlist']//android.widget.TextView");
+	By lstState = By.xpath(
+			"//android.widget.ScrollView[@content-desc='search_select_state flatlist']//android.widget.TextView");
+	By lstCity = By
+			.xpath("//android.widget.ScrollView[@content-desc='search_select_city flatlist']//android.widget.TextView");
+	By lstRoomType = By
+			.xpath("//android.widget.ScrollView[@content-desc='search_room_type flatlist']//android.widget.TextView");
+	By lstNoOfRoom = By.xpath(
+			"//android.widget.ScrollView[@content-desc='search_select_no_of_rooms flatlist']//android.widget.TextView");
+	By lstNoOfAdults = By.xpath(
+			"//android.widget.ScrollView[@content-desc='search_select_no_of_adults flatlist']//android.widget.TextView");
 	By ddnState = By.xpath("//android.widget.TextView[@text='Select State']");
 	By ddnSelectState = By.xpath("//android.widget.TextView[@text='Andhra Pradesh']");
-	By ddnCity  = By.xpath("//android.widget.TextView[@text='Select City']");
+	By ddnCity = By.xpath("//android.widget.TextView[@text='Select City']");
 	By ddnSelectCity = By.xpath("//android.widget.TextView[@text='Tirupati']");
 	By ddnRoomType = By.xpath("//android.widget.TextView[@text='Select Room Type']");
 	By ddnSelectRoomType = By.xpath("//android.widget.TextView[@text='Standard']");
@@ -36,20 +47,32 @@ public class ExploreHotelPage extends BaseClass {
 	By textCheckOutErrorMessage = By.xpath("//android.widget.TextView[@text='Please select Check-out date']");
 	By textNoOfRoomsErrorMessage = By.xpath("//android.widget.TextView[@text='Please select no. of rooms']");
 	By textNoOfAdultsErrorMessage = By.xpath("//android.widget.TextView[@text='Please select no. of adults']");
-	
-	
-	
-	
-	
-	
-	public String getSuccessMessage() {
-		explicitWait(textWelcome);
-		String elementGetText = elementGetText(findLocatorBy(textWelcome));
-		return elementGetText;
+	By bytextWelcomeWeb = By.xpath("//*[@data-testid ='username']");
+	@FindBy(xpath = "//*[@data-testid ='username']")
+	private WebElement textWelcomeWeb;
+
+	public WebElement getTextWelcome() {
+		return textWelcomeWeb;
 	}
-	
-	public void searchHotels(String state, String city,String roomType, String checkInDate, String checkOutDate, String noOfRooms, String noOfAdults, String noOfChilds) throws InterruptedException {
-		
+
+	public String getSuccessMessage() {
+		String appType = androidDriver.getContext();
+		switch (appType.toLowerCase()) {
+		case "native_app":
+			explicitWait(textWelcome);
+			String elementGetText = elementGetText(findLocatorBy(textWelcome));
+			return elementGetText;
+		case "chromium":
+			explicitWait(bytextWelcomeWeb);
+			String text = elementGetText(textWelcomeWeb);
+			return text;
+		}
+		return null;
+	}
+
+	public void searchHotels(String state, String city, String roomType, String checkInDate, String checkOutDate,
+			String noOfRooms, String noOfAdults, String noOfChilds) throws InterruptedException {
+
 		elementClick(findLocatorBy(ddnState));
 		selectDropdownOption(state, lstState);
 		elementClick(findLocatorBy(ddnCity));
@@ -58,10 +81,10 @@ public class ExploreHotelPage extends BaseClass {
 		selectDropdownOption(roomType, lstRoomType);
 		elementClick(findLocatorBy(dpkCheckIn));
 		explicitWait(btnCalendarOk);
-	//	elementClick(findLocatorBy(dpkSelectCheckIn));
+		// elementClick(findLocatorBy(dpkSelectCheckIn));
 		elementClick(findLocatorBy(btnCalendarOk));
 		elementClick(findLocatorBy(dpkCheckOut));
-	//	elementClick(findLocatorBy(dpkSelectCheckOut));
+		// elementClick(findLocatorBy(dpkSelectCheckOut));
 		explicitWait(btnCalendarOk);
 		elementClick(findLocatorBy(btnCalendarOk));
 		elementClick(findLocatorBy(ddnNoOfRooms));
@@ -69,12 +92,13 @@ public class ExploreHotelPage extends BaseClass {
 		elementClick(findLocatorBy(ddnNoOfAdults));
 		selectDropdownOption(noOfAdults, lstNoOfAdults);
 		elementSendKeys(findLocatorBy(txtNoOfChild), noOfChilds);
-		elementClick(findLocatorBy(btnSearch));	
+		elementClick(findLocatorBy(btnSearch));
 		Thread.sleep(10000);
 	}
+
 	public void searchHotels(String stateName, String cityName, String checkInDate, String checkOutDate,
 			String noOfRooms, String noOfAdults) {
-		
+
 		elementClick(findLocatorBy(ddnState));
 		selectDropdownOption(stateName, lstState);
 		elementClick(findLocatorBy(ddnCity));
@@ -89,13 +113,15 @@ public class ExploreHotelPage extends BaseClass {
 		selectDropdownOption(noOfRooms, lstNoOfRoom);
 		elementClick(findLocatorBy(ddnNoOfAdults));
 		selectDropdownOption(noOfAdults, lstNoOfAdults);
-		elementClick(findLocatorBy(btnSearch));		
+		elementClick(findLocatorBy(btnSearch));
 
 	}
+
 	public void clickSearchHotel() {
 
 		elementClick(findLocatorBy(btnSearch));
 	}
+
 	public String getStateNameErrorMessageText() {
 
 		String text = elementGetText(findLocatorBy(textStateErrorMessage));
@@ -127,5 +153,5 @@ public class ExploreHotelPage extends BaseClass {
 		return text;
 
 	}
-	 
+
 }

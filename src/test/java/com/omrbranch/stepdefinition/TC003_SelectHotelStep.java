@@ -2,11 +2,12 @@ package com.omrbranch.stepdefinition;
 
 import org.junit.Assert;
 
+import com.omrbranch.baseclass.BaseClass;
 import com.omrbranch.objectmanager.PageObjectManager;
 
 import io.cucumber.java.en.*;
 
-public class TC003_SelectHotelStep {
+public class TC003_SelectHotelStep extends BaseClass {
 	PageObjectManager pom = new PageObjectManager();
 	
 	@When("User scrolls down, save the first hotel name and hotel price")

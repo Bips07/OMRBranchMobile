@@ -19,6 +19,7 @@ public class LoginPage extends BaseClass {
 		By txtPass = By.xpath("//android.widget.EditText[@content-desc='Password']");
 		By btnLogin = By.xpath("//android.view.ViewGroup[@resource-id='login_button']") ;
 		By errorMessage = By.xpath("//android.widget.TextView[@resource-id='login_error_message']");
+		By btnLocationAllow = By.xpath("//android.widget.Button[@text ='Allow this time']");
 		
 		@FindBy(id="email")
 		private WebElement WebtxtUserName;
@@ -71,5 +72,11 @@ public class LoginPage extends BaseClass {
 			explicitWait(errorMessage);
 			String msg=elementGetText(findLocatorBy(errorMessage));
 			return msg;
+		}
+		
+		public void clickAllow() {
+			switchContext("NATIVE_APP");
+			elementClick(findLocatorBy(btnLocationAllow));
+			switchContext("CHROMIUM");
 		}
 	}

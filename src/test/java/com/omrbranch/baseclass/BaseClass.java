@@ -34,7 +34,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 
 public class BaseClass {
@@ -44,30 +43,33 @@ public class BaseClass {
 	TakesScreenshot takesScreenshot;
 	Actions actions;
 	Alert alert;
-	static WebDriverWait wait;
+	public static WebDriverWait wait;
+	public static AndroidDriver androidDriver;
 
 	public void selectDropdownOption(String data, By by) {
-		
+
 		explicitWait(by);
 		List<WebElement> elements = findLocatorsBy(by);
 		for (WebElement webElement : elements) {
 			String text = webElement.getText();
-			if(text.equals(data)) {
+			if (text.equals(data)) {
 				webElement.click();
 				break;
 			}
-			
+
 		}
-		
+
 	}
-	
+
 	public void initalizeExplicitWait(int sec) {
 		wait = new WebDriverWait(driver, Duration.ofSeconds(sec));
 	}
+
 	public void explicitWait(By by) {
-		
+
 		wait.until(ExpectedConditions.visibilityOfElementLocated(by));
 	}
+
 	public void swipe() {
 		Dimension size = driver.manage().window().getSize();
 		int width = size.getWidth();
@@ -101,15 +103,17 @@ public class BaseClass {
 		}
 		implicitWait();
 	}
-	public List<WebElement> findLocatorsBy(By by){
+
+	public List<WebElement> findLocatorsBy(By by) {
 		List<WebElement> elements = driver.findElements(by);
 		return elements;
 	}
-	
+
 	public WebElement findLocatorBy(By by) {
 		WebElement element = driver.findElement(by);
 		return element;
 	}
+
 	public static String getProjectPath() {
 		return System.getProperty("user.dir");
 
@@ -124,8 +128,8 @@ public class BaseClass {
 	}
 
 	public void switchContext(String appType) {
-		AndroidDriver androidDriver = (AndroidDriver) driver;
-		switch (appType) {
+		
+		switch (appType.toUpperCase()) {
 		case "NATIVE_APP":
 			androidDriver.context(appType);
 
@@ -138,7 +142,6 @@ public class BaseClass {
 		default:
 			break;
 		}
-
 	}
 
 	public void appLaunch(String type, String browserName, String deviceName, String platformName,
@@ -148,22 +151,20 @@ public class BaseClass {
 		capabilities.setCapability("appium:platformName", platformName);
 		capabilities.setCapability("appium:platformVersion", platformVersion);
 		capabilities.setCapability("appium:automationName", automationName);
-		switch (type) {
+		switch (type.toUpperCase()) {
 
 		case "APP":
 			capabilities.setCapability("appium:appPackage", appPackage);
 			capabilities.setCapability("appium:appActivity", appActivity);
-
 			break;
 		case "BROWSER":
 			capabilities.setCapability("appium:browserName", browserName);
-
 			break;
-
 		default:
 			break;
 		}
-		driver = new AppiumDriver(capabilities);
+		driver = new AndroidDriver(capabilities);
+		androidDriver =  (AndroidDriver) driver;
 		initalizeExplicitWait(60);
 
 	}
@@ -220,6 +221,7 @@ public class BaseClass {
 
 	public void visibilityOfElement(WebElement element) {
 		WebDriverWait driverWait = new WebDriverWait(driver, Duration.ofSeconds(60));
+	//	driver = (WebDriver) driver;
 		driverWait.until(ExpectedConditions.visibilityOf(element));
 
 	}

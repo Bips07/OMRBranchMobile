@@ -36,7 +36,7 @@ Feature: Cancel Booking Module
 
     Examples: 
       | userName | password | state | city | roomType | checkIn | check-out | No of Room | No of Adults | No of Childs | Select Salutation | First Name | Last Name | Mobile No. | Email | Enter Registration No. | Enter Company Name | Enter Company Address | Request | <Modify Date> |
-      | rookie.deepu07@gmail.com | Deepakumar@2003 | Andhra Pradesh | Tirupati | Deluxe | 18 July 2026 | 28 July 2026 | 1-One | 1-One | 1 | Mr.| Arun | Kumar | 1236549873 | test@gmail.com | 9043592058 | Greens Tech OMR Branch | Thoraipakkam | Valet parking needed | 2025-12-10 |
+      | bipevstar@gmail.com | Chayowo@12 | Andhra Pradesh | Tirupati | Deluxe | 18 July 2026 | 28 July 2026 | 1-One | 1-One | 1 | Mr.| Arun | Kumar | 1236549873 | test@gmail.com | 9043592058 | Greens Tech OMR Branch | Thoraipakkam | Valet parking needed | 2025-12-10 |
 
   Scenario Outline: Verify cancel Booking id when user booked hotel including GST-Card(credit card)-With special request
     Given User is on the OMR Branch hotel page
